@@ -20,16 +20,12 @@ let robotElement;
 // === STEG 2: Skapa rutnätets celler ===
 
 function createGrid() {
-  // TODO: Skapa 100 celler (10x10) och lägg till dem i grid-elementet
-  // Tips: Använd en loop och createElement()
-  
   for (let i = 0; i < 100; i++) {
     const cell = document.createElement('div');
     cell.className = 'grid-cell bg-gray-800 border border-gray-600';
     grid.appendChild(cell);
   }
-}
-
+};
 
 // === STEG 3: Skapa robot-elementet ===
 
@@ -40,10 +36,10 @@ function createRobot() {
   robotElement = document.createElement('div');
   robotElement.className = 'robot';
   robotElement.textContent = '🤖';
-  robotElement.style.position = 'absolute'; // Eller använd CSS Grid positioning
+  robotElement.style.position = 'absolute justify-center'; // Eller använd CSS Grid positioning
   
   // TODO: Lägg till robotElement i DOM:en
-  // grid.appendChild(robotElement); // eller motsvarande
+   grid.appendChild(robotElement); // eller motsvarande
 }
 
 
@@ -58,8 +54,8 @@ function updateUI() {
   
   // TODO: Uppdatera robotens position i rutnätet
   // Tips för CSS Grid:
-  // robotElement.style.gridColumnStart = robot.x + 1;
-  // robotElement.style.gridRowStart = robot.y + 1;
+robotElement.style.gridColumnStart = robot.x + 1;
+robotElement.style.gridRowStart = -robot.y + 1;
   
   // TODO: Uppdatera robotens rotation baserat på direction
   // Tips: Använd ett objekt som "lookup table"
@@ -70,13 +66,14 @@ function updateUI() {
     'WEST': 270
   };
   
-  // const rotation = rotations[robot.direction];
-  // robotElement.style.transform = `rotate(${rotation}deg)`;
+   const rotation = rotations[robot.direction];
+   robotElement.style.transform = `rotate(${rotation}deg)`;
+   console.log(`Just nu är den roterad ${rotation}`);
   
   // TODO: Uppdatera status-displayen
-  // xDisplay.textContent = robot.x;
-  // yDisplay.textContent = robot.y;
-  // directionDisplay.textContent = robot.direction;
+   xDisplay.textContent = robot.x;
+   yDisplay.textContent = robot.y;
+   directionDisplay.textContent = robot.direction;
 }
 
 
@@ -88,18 +85,43 @@ function updateUI() {
 // 2. Anropa updateUI() för att visa förändringen
 
 // Exempel:
-// forwardBtn.addEventListener('click', () => {
-//   robot.moveForward();
-//   updateUI();
-// });
+forwardBtn.addEventListener('click', () => {
+  if(robot.y === 0 && robot.direction === 'NORTH'){
+    alert('Kan inte gå utanför rutnätet');
+  } else {
+    if(robot.x === 0 && robot.direction === 'WEST'){
+      alert('Kan inte gå utanför rutnätet');
+    } else {
+      if(robot.x === 9 && robot.direction === 'EAST'){
+        alert('Kan inte gå utanför rutnätet');
+      } else {
+        if(robot.y === -9 && robot.direction === 'SOUTH'){
+          alert('Kan inte gå utanför rutnätet');
+        } else {
+             robot.moveForward();
+             updateUI();
+        }
+      }
+    }
+  }
+ });
 
+ rightBtn.addEventListener('click', () => {
+   robot.turnRight();
+   updateUI();
+ });
+
+ leftBtn.addEventListener('click', () => {
+   robot.turnLeft();
+   updateUI();
+ });
 // TODO: Lägg till för rightBtn och leftBtn också
 
 // TODO: Reset-knappen ska återställa roboten och uppdatera UI
-// resetBtn.addEventListener('click', () => {
-//   robot.reset();
-//   updateUI();
-// });
+ resetBtn.addEventListener('click', () => {
+   robot.reset();
+   updateUI();
+ });
 
 
 // === STEG 6: Initialisering ===

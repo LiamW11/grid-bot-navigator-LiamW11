@@ -68,6 +68,11 @@ const robot = {
 };
   },
 
+  reset(){
+    this.direction = 'NORTH';
+    this.x = 0;
+    this.y = 0;
+  },
   /**
    * Returnerar en beskrivning av robotens position
    * @returns {string} Beskrivning av position och riktning

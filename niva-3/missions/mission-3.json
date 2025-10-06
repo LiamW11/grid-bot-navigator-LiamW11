@@ -4,7 +4,7 @@
   "difficulty": "Svår",
   "commands": [
     "FORWARD", "RIGHT", "FORWARD", "LEFT", "FORWARD", "FORWARD",
-    "LEFT", "FORWARD", "RIGHT", "FORWARD", "LEFT", "FORWARD",
+    "LEFT", "FORWARD", "RIGHT", "FORWARD", "FORWARD", "RIGHT", "FORWARD", "FORWARD",
     "RIGHT", "FORWARD", "FORWARD", "LEFT", "FORWARD"
   ]
 }

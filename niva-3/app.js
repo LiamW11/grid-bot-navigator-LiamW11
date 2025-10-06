@@ -18,6 +18,7 @@ const progressText = document.getElementById('progress-text');
 let robotElement;
 let currentMission = null;
 let isExecuting = false;
+let missionSpeed = 0;
 
 
 // === Grundläggande funktioner (från Nivå 2) ===
@@ -70,13 +71,11 @@ async function fetchMission(missionNumber) {
     // 3. Returnera data
     
     // Exempel:
-    // const response = await fetch(`missions/mission-${missionNumber}.json`);
-    // if (!response.ok) throw new Error('Kunde inte hämta uppdrag');
-    // const data = await response.json();
-    // return data;
-    
-    console.log('TODO: Implementera fetchMission()');
-    return null;
+     const response = await fetch(`missions/mission-${missionNumber}.json`);
+     if (!response.ok) throw new Error('Kunde inte hämta uppdrag');
+     const data = await response.json();
+     return data;
+
   } catch (error) {
     console.error('❌ Fel vid hämtning:', error);
     alert('Kunde inte hämta uppdraget. Kontrollera att du kör med en lokal server (Live Server).');
@@ -94,11 +93,12 @@ function executeCommand(command) {
   // TODO:
   // Använd en switch eller if/else för att anropa rätt robot-metod
   // Exempel:
-  // switch(command) {
-  //   case 'FORWARD': robot.moveForward(); break;
-  //   case 'RIGHT': robot.turnRight(); break;
+   switch(command) {
+     case 'FORWARD': robot.moveForward(); break;
+     case 'RIGHT': robot.turnRight(); break;
+     case 'LEFT': robot.turnLeft(); break;
   //   ...
-  // }
+   }
   
   console.log('TODO: Implementera executeCommand() för:', command);
 }
@@ -125,16 +125,16 @@ async function executeCommands(commands) {
   //    - Kontrollera om isExecuting är false (användaren stoppade)
   
   // Exempel:
-  // for (let i = 0; i < commands.length; i++) {
-  //   if (!isExecuting) break;
+   for (let i = 0; i < commands.length; i++) {
+     if (!isExecuting) break;
   //   
-  //   const command = commands[i];
-  //   executeCommand(command);
-  //   updateUI();
-  //   updateProgress(i + 1, commands.length);
+     const command = commands[i];
+     executeCommand(command);
+     updateUI();
+     updateProgress(i + 1, commands.length);
   //   
-  //   await sleep(500);
-  // }
+     await sleep(missionSpeed);
+   }
   
   console.log('TODO: Implementera executeCommands() för:', commands);
   
@@ -208,21 +208,30 @@ function displayMission(mission) {
 // Uppdragsval-knappar
 document.getElementById('mission-1-btn').addEventListener('click', async () => {
   const mission = await fetchMission(1);
+  missionSpeed = 500;
   displayMission(mission);
 });
 
 document.getElementById('mission-2-btn').addEventListener('click', async () => {
   const mission = await fetchMission(2);
+  missionSpeed = 500;
   displayMission(mission);
 });
 
 document.getElementById('mission-3-btn').addEventListener('click', async () => {
   const mission = await fetchMission(3);
+  missionSpeed = 500;
+  displayMission(mission);
+});
+
+document.getElementById('mission-4-btn').addEventListener('click', async () => {
+  const mission = await fetchMission(4);
+  missionSpeed = 50;
   displayMission(mission);
 });
 
 randomMissionBtn.addEventListener('click', async () => {
-  const randomNum = Math.floor(Math.random() * 3) + 1;
+  const randomNum = Math.floor(Math.random() * 4) + 1;
   const mission = await fetchMission(randomNum);
   displayMission(mission);
 });
