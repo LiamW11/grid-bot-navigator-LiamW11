@@ -41,17 +41,17 @@ function createRobot() {
 }
 
 function updateUI() {
-  console.log('🔄 UI:', robot.getPosition());
+  console.log('🔄 UI:', game.getPosition());
   
-  robotElement.style.gridColumn = robot.x + 1;
-  robotElement.style.gridRow = (10 - robot.y);
+  robotElement.style.gridColumn = game.player.x + 1;
+  robotElement.style.gridRow = (10 - game.player.y);
   
   const rotations = { 'NORTH': 0, 'EAST': 90, 'SOUTH': 180, 'WEST': 270 };
-  robotElement.style.transform = `rotate(${rotations[robot.direction]}deg)`;
+  robotElement.style.transform = `rotate(${rotations[game.player.direction]}deg)`;
   
-  xDisplay.textContent = robot.x;
-  yDisplay.textContent = robot.y;
-  directionDisplay.textContent = robot.direction;
+  xDisplay.textContent = game.player.x;
+  yDisplay.textContent = game.player.y;
+  directionDisplay.textContent = game.player.direction;
 }
 
 
@@ -94,9 +94,9 @@ function executeCommand(command) {
   // Använd en switch eller if/else för att anropa rätt robot-metod
   // Exempel:
    switch(command) {
-     case 'FORWARD': robot.moveForward(); break;
-     case 'RIGHT': robot.turnRight(); break;
-     case 'LEFT': robot.turnLeft(); break;
+     case 'FORWARD': game.moveForward(); break;
+     case 'RIGHT': game.turnRight(); break;
+     case 'LEFT': game.turnLeft(); break;
   //   ...
    }
   
@@ -251,7 +251,7 @@ stopBtn.addEventListener('click', () => {
 
 // Återställ robot
 resetBtn.addEventListener('click', () => {
-  robot.reset();
+  game.reset();
   updateUI();
   updateProgress(0, 0);
 });
